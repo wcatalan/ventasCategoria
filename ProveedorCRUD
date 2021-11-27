@@ -1,0 +1,186 @@
+package Test;
+
+import datos.ProveedorJDBC;
+import domain.Proveedor;
+import domain.Proveedor;
+import java.util.List;
+import java.util.Scanner;
+
+public class ProveedorCRUD {
+
+     public static void InsertData(){
+        Line();
+
+    int idProveedor;
+    String nombre;
+    String direccion;
+    String email;
+    String telefono;
+    String NIT;
+    String NRC;
+    String contacto;
+        
+        ProveedorJDBC proveedorJDBC = new ProveedorJDBC();
+        System.out.println(">>> INSERTAR UN DATO <<<");
+        Proveedor UpdateProveedor = new Proveedor();
+        Scanner leer = new Scanner(System.in);
+        System.out.println("id Proveedor:>");
+        UpdateProveedor.setIdProveedor(idProveedor = leer.nextInt());
+        System.out.println("nombre:>");
+        UpdateProveedor.setNombre(nombre = leer.next());
+        System.out.println("Dirección:>");
+        UpdateProveedor.setDireccion(direccion = leer.next());
+        System.out.println("Email:>");
+        UpdateProveedor.setEmail(email = leer.nextLine());
+        System.out.println("Telefono:>");
+        UpdateProveedor.setTelefono(telefono = leer.next());
+        System.out.println("NIT:>");
+        UpdateProveedor.setNIT(NIT = leer.next());
+        System.out.println("NRC:>");
+        UpdateProveedor.setNRC(NRC = leer.next());
+        System.out.println("Contacto:>");
+        UpdateProveedor.setContacto(contacto = leer.next());
+        proveedorJDBC.update(UpdateProveedor);
+        Line();
+    }
+
+      public static void ExtraerData(){
+
+        ProveedorJDBC proveedorJDBC = new ProveedorJDBC();
+
+        List<Proveedor> producto = proveedorJDBC.select();
+        Line();
+        System.out.println("\t\t\t\t\tBASE DE DATOS\n");
+        for(Proveedor Proveedor:producto){
+            System.out.println(Proveedor);
+        }
+        Line();
+    }
+
+    public static void DeleteData(){
+        Line();
+        int id = 0, res=0;
+        Scanner leer = new Scanner(System.in);
+        ProveedorJDBC proveedorJDBC = new ProveedorJDBC();
+        Proveedor DeleteProveedor = new Proveedor();
+        System.out.println("\tBORRAR DATOS");
+        id = EvalueData();
+        if(id == 0){
+            System.out.println(">>> Salio de la opcion!");
+        }
+        else{
+            do{
+                System.out.println("Realmente desea eliminar los datos?:>");
+                System.out.println("1-SI");
+                System.out.println("2-No");
+                res = leer.nextInt();
+                if(res<1 || res>2){
+                    System.out.println("Opcion no valida!...");
+                }
+            } while (res<1 || res>2);
+            if(res==1){
+                DeleteProveedor.setIdProveedor(id);
+                proveedorJDBC.delete(DeleteProveedor);
+            }
+            else{
+                System.out.println(">>> Operacion cancelada!");
+            }
+        }
+        Line();
+    }
+
+    public static void UpdateData(){
+        Line();
+        int id=0;
+    int idProveedor;
+    String nombre;
+    String direccion;
+    String email;
+    String telefono;
+    String NIT;
+    String NRC;
+    String contacto;
+        
+        
+        System.out.println("\t\tModificar datos");
+        ProveedorJDBC proveedorJDBC = new ProveedorJDBC();
+        Proveedor UpdateProveedor = new Proveedor();
+        //System.out.println(">>> MODIFICANDO DATOS <<<");
+        Scanner leer = new Scanner(System.in);
+        id = EvalueData();
+        if(id == 0){
+            System.out.println(">>> Salio de la opcion!");
+        }
+        else{
+            System.out.println("Nuevo Nombre Proveedor:>");
+           
+            
+             System.out.println("id Proveedor:>");
+            System.out.println("id Proveedor:>");
+        UpdateProveedor.setIdProveedor(idProveedor = leer.nextInt());
+        System.out.println("nombre:>");
+        UpdateProveedor.setNombre(nombre = leer.next());
+        System.out.println("Dirección:>");
+        UpdateProveedor.setDireccion(direccion = leer.next());
+        System.out.println("Email:>");
+        UpdateProveedor.setEmail(email = leer.nextLine());
+        System.out.println("Telefono:>");
+        UpdateProveedor.setTelefono(telefono = leer.next());
+        System.out.println("NIT:>");
+        UpdateProveedor.setNIT(NIT = leer.next());
+        System.out.println("NRC:>");
+        UpdateProveedor.setNRC(NRC = leer.next());
+        System.out.println("Contacto:>");
+        UpdateProveedor.setContacto(contacto = leer.next());
+            
+            
+            UpdateProveedor.setIdProveedor(id);
+            proveedorJDBC.update(UpdateProveedor);
+        }
+        Line();
+    }
+
+       public static int EvalueData(){
+        int enc = 0, id = 0, pos=0;
+        Scanner leer = new Scanner(System.in);
+        ProveedorJDBC proveedorJDBC = new ProveedorJDBC();
+        List<Proveedor> proveedorsJDBC = proveedorJDBC.select();
+        do{
+            id=0;
+            pos=0;
+            Line();
+            //System.out.println(">>> MODIFICANDO DATOS <<<");
+            System.out.println("Ingrese el identificador (id), para salir -> '0':");
+            System.out.println(":>");
+            id = leer.nextInt();
+            if(id == 0){break;}
+            System.out.println("\t\t\t\t\tBuscando identificador...\n");
+            for(Proveedor proveedor:proveedorsJDBC){
+                if(id != proveedor.getIdProveedor()){
+                    enc  = 0;
+                }
+                else{
+                    enc = 1;
+                    break;
+                }
+                pos++;
+            }
+            if(id<0){
+                System.out.println(">>> Error: No existen identificadores negativos! " + "->" + " ["+ id +"]");
+            }
+            else if(enc == 0){
+                System.out.println("Este identificador [" + id + "] no existe en la base de datos o fue eliminado!");
+            }
+            else if(enc == 1){
+                System.out.println("*** ID = [" + id + "] Encontrado! ***");
+                System.out.println("Datos:\n" + proveedorsJDBC.get(pos));
+            }
+            Line();
+        }while(enc != 1 || id == 0);
+        return id;
+    }
+
+    public static void Line(){
+        System.out.println("\n------------------------------------------------------------------------------------------------------------");
+    }
+}
