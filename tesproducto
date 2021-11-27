@@ -1,0 +1,86 @@
+package Test;
+import datos.ProductoDAO;
+import domain.Producto;
+import java.util.List;
+import java.util.Scanner;
+public class TestProducto {
+    
+    public static void main(String[] args) {
+        ProductoDAO productDAO = new ProductoDAO();
+        Producto product = new Producto();
+        Scanner sc = new Scanner(System.in);
+        int op;
+        do{
+            System.out.println("\nOpciones: \n1-SelectAll\n2-Insert\n3-Update\n4-Delete\n5-Salir\n");
+            op=sc.nextInt();
+        switch(op){
+            case 1:
+                List<Producto> productos = productDAO.select();
+                for(Producto producto:productos){
+                    System.out.println("Producto: " + producto);
+                }
+            break;
+            case 2:
+                
+                System.out.println("idcategoria: ");
+                product.setIdCategoria(sc.nextInt());
+                
+                System.out.println("idpresentacion: ");
+                product.setIdPresentacion(sc.nextInt());
+                
+                System.out.println("idmarca: ");
+                product.setIdMarca(sc.nextInt());
+                
+                System.out.println("descripcion: ");
+                product.setDescripcion(sc.next());
+                
+                System.out.println("precio: ");
+                product.setPrecio(sc.nextDouble());
+                
+                System.out.println("costo: ");
+                product.setCosto(sc.nextDouble());
+                
+                System.out.println("stock: ");
+                product.setStock(sc.nextInt());
+                productDAO.insert(product);
+            break;
+            case 3:
+                System.out.println("idproducto: ");
+                product.setIdProducto(sc.nextInt());
+                System.out.println("idcategoria: ");
+                product.setIdCategoria(sc.nextInt());
+                
+                System.out.println("idpresentacion: ");
+                product.setIdPresentacion(sc.nextInt());
+                
+                System.out.println("idmarca: ");
+                product.setIdMarca(sc.nextInt());
+                
+                System.out.println("descripcion: ");
+                product.setDescripcion(sc.next());
+                
+                System.out.println("precio: ");
+                product.setPrecio(sc.nextDouble());
+                
+                System.out.println("costo: ");
+                product.setCosto(sc.nextDouble());
+                
+                System.out.println("stock: ");
+                product.setStock(sc.nextInt());
+                productDAO.update(product);
+            break;
+            
+            case 4:
+                System.out.println("Id: ");
+                product.setIdProducto(sc.nextInt());
+                productDAO.delete(product);
+            break;
+            
+        }
+        if(op>5 || op<1){
+            System.out.println("\nOpcion Incorrecta");
+        }
+        }while(op!=5);
+        
+    }
+}
